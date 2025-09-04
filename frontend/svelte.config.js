@@ -19,7 +19,10 @@ const config = {
 				include: ['/*'],
 				exclude: ['<all>']
 			}
-		})
+		}),
+		alias: {
+			$stores: 'src/stores',
+		}
 	}
 };
 
