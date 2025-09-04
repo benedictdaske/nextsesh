@@ -1,0 +1,12 @@
+<script lang="ts">
+	import '../app.css'
+	import { onMount } from 'svelte';
+	import { auth } from '$lib/utils/auth-service';
+	let { children } = $props()
+
+	onMount(() => {
+		auth.init()
+	})
+</script>
+
+{@render children()}

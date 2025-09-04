@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+/* supposed to work, but doesnt */
+/* @plugin 'preline/plugin'; */
+@source 'node_modules/preline/dist';
+
+@plugin '@tailwindcss/forms';
