@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes 
-from scheduling.models import AppUser, Gym, Session
+from scheduling.models import Gym, Session
 from scheduling.serializers import GymSerializer, SessionSerializer, AppUserSerializer
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -39,9 +38,6 @@ class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer
     permission_classes = [IsAuthenticated]
     
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-        
     def create(self, request, *args, **kwargs):
         print("Received request data:", request.data)
     
@@ -52,6 +48,9 @@ class SessionViewSet(viewsets.ModelViewSet):
         
         return Response(serializer.data, status=201, headers=headers)
     
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        
     def perform_destroy(self, instance):
         if instance.user != self.request.user:
             raise PermissionDenied("You do not have permission to delete this session.")
