@@ -8,45 +8,93 @@ Current features include:
 
 ---
 
+
 ## 📚 Table of Content
 
-- [🛠 Setup](#-setup)
+- [📌 Notes](#-notes)
+- [📎 General](#-setup)
   - [🌿 Branches](#-branches)
-  - [📦 Poetry](#-poetry)
-    - [🧪 Development](#-development)
-  - [🪝 Pre-commit hooks](#-pre-commit-hooks)
+  - [🧰 Services](#-services)
+- [🛠 Setup](#-setup)
+  - [📦 Dependencies](#-dependencies)
   - [📄 .env Files](#env-files)
-    - [🔑 JWT Secret](#-jwt_secret)
-  - [🔄 CI/CD](#-ci/cd)
+    - [🔑 Django Secret](#-django-secret)
+  <!-- - [🔄 CI/CD](#-ci/cd) -->
 - [📝 Usage](#-usage)
   - [🪂 Database connection and execution](#-database-connection-and-execution)
   - [⚛ Rest API for development purposes](##-rest-api-for-development-purposes)
     - [🔗 Endpoints](###-endpoints)
 - [🚀 Deployment](#-deployment)
 
-# 🛠 Setup
 
-## 🌿 Branches
+## 📌 Notes
+- currently in pre-alpha
+- MVP only
+- starting alpha development
 
-- `main`: The main branch is production-ready. It is pulled by the production server. Should be production-ready.
-- `dev`: The development the branch merges new features. Formatting, linting and run tests are performed.
-- `feature/*`: The feature branches manage the development process. Eventually merged into `dev` once completed.
+
+## 📎 General
+
+### 🌿 Branches
+
+- `main`: The main branch is production-ready. It is pulled by the production servers and deployed on push.
+- `alpha`: The alpha branch is testing-ready. It is pulled by the production servers and deployed on push. Should be mostly production ready.
+- `dev`: The development branch merges new features. Formatting, linting and run tests are performed.
+- `alpha-dev`: The alpha development branch merges new features for testing phase.
+- `feature/*`: The feature branches manage the development process. Eventually merged into `dev` or `alpha-dev` once completed.
 
 Merge requests must only merge into `dev`. The `main` branch is only updated by merges from `dev`.
 
-## 📦 uv & npm
+### 🧰 Services
+- Frontend Deployment: A combination of Cloudflare [Pages](https://pages.cloudflare.com/) and [Workers](https://workers.cloudflare.com/) allows for automated deployments.
+- Backend Deployment: [Coolify](https://coolify.io/) is connected the Frontend Deployment using a Cloudflare [Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/).
 
-[uv](https://github.com/astral-sh/uv) manages all backend dependencies. To install dependencies, run the following command:
+
+## 🛠 Setup
+
+### 💾 Install Project
+Clone the git repo as usual.
 
 ```bash
-uv sync
+git clone git@github.com:benedictdaske/nextsesh.git
 ```
 
-[npm](https://github.com/npm) manages the frontent dependencies. To install dependencies, run the following command:
+Make sure you have installed uv for Python dependencies and npm for TypeScript dependencies.
+
+
+### 📦 Dependencies
+[npm](https://github.com/npm) manages the frontend dependencies. To install, run the following command:
 
 ```bash
-npm install
+cd frontend && npm install
 ```
+
+[uv](https://github.com/astral-sh/uv) manages all backend dependencies. To install, run the following command:
+
+```bash
+cd backend && uv sync
+```
+
+### 📄 .env Files 
+
+There are several .env.sample files in the project. 
+To get started, simply `cp .env.sample .env` in the corresponding directory and then specify the missing information between the quotation marks.
+
+- `.env` in the `frontend` folder
+- `.env` in the `backend` folder
+
+#### 🔑 Django Secret
+
+To generate a Django Secret Key for your Database use this command with your python environment activated:
+
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+Then copy the random string as `DJANGO_SECRET_KEY` into the backend `.env`.
+
+
+
 <!-- 
 ## 🪝 Pre-commit hooks
 
@@ -55,22 +103,6 @@ We use pre-commit to ensure the code quality locally. The package pre-commit wil
 ```bash
 poetry run pre-commit install
 ```
-## 📄 .env Files 
-
-There are several .env.sample files in the project. 
-To get started, simply `cp .env.sample .env` in the corresponding directory and then specify the missing information between the quotation marks.
-
-- `.env` in the root folder
-- `.env` in the `hana` folder
-- `.env` in the `llm` folder
-- `.env` in the `ner/app` folder
-
-
-### 🔑 JWT Secret
-
-Generate a secret by running `python3 -m websocket.jwt_handler` and put it as `JWT_AUTH_SECRET` into the .env file.
-Also add the JWT_AUTH_SECRET to the `.env` file in the `frontend` repository. 
-
 
 ## 🔄 CI/CD
 
@@ -92,29 +124,6 @@ now, to run the backend server
 
 poetry run uvicorn  websocket.app:app --port 8080 --host localhost
 ```
-
-
-## 🤖 LLM
-
-We use the [LightLLM](https://github.com/ModelTC/lightllm) proxy to query Large Language Models for our Pipeline. Please make sure to have Docker installed and running.
-To start the LLM Proxy, run
-
-```bash
-cd llm
-docker compose up
-```
-
-## 🔍 NER
-
-Please read the `ner/README.md` for more information on the NER service.
-If you have modified the NER code, please rebuild the ner-docker-image.
-
-start the service by running
-  
-  ```bash
-  cd ner
-  docker compose up
-  ```
 
 
 ## 🪂 Database connection and execution
