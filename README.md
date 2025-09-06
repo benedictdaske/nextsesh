@@ -28,12 +28,12 @@ Current features include:
 
 ## 📌 Notes
 
-> 📘 Project State
+> [!NOTE]
 > 
 > The project is currently in pre-alpha.
-> `main` does contain the MVP but is deplyed as a static info website only.
+> The `main` branch does contain the MVP but is deplyed as a static info website only.
 
-> 🚧 Bugs, Crashes & Missing features
+> [!IMPORTANT]
 >
 > The project is in a very early alpha stage.
 > Thus, there may be repeated bugs or crashes.
