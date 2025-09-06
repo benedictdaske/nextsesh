@@ -5,7 +5,6 @@ Current features include:
 
 1. **🕓 Scheduling**: Schedule your next sessions
 
-
 ---
 
 
