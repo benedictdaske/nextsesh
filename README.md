@@ -27,10 +27,17 @@ Current features include:
 
 
 ## 📌 Notes
+
 > 📘 Project State
 > 
 > The project is currently in pre-alpha.
 > `main` does contain the MVP but is deplyed as a static info website only.
+
+> 🚧 Bugs, Crashes & Missing features
+>
+> The project is in a very early alpha stage.
+> Thus, there may be repeated bugs or crashes.
+> Most features are still missing.
 
 
 ## 📎 General
