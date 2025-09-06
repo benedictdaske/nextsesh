@@ -20,17 +20,17 @@ Current features include:
   - [📄 .env Files](#env-files)
     - [🔑 Django Secret](#-django-secret)
   <!-- - [🔄 CI/CD](#-ci/cd) -->
-- [📝 Usage](#-usage)
-  - [🪂 Database connection and execution](#-database-connection-and-execution)
-  - [⚛ Rest API for development purposes](##-rest-api-for-development-purposes)
-    - [🔗 Endpoints](###-endpoints)
+- [📝 Usage](#-local-usage)
+  - [🔧 Database Changes](#-database-changes)
+  - [🎛️ Django Admin](#-django-admin)
 - [🚀 Deployment](#-deployment)
 
 
 ## 📌 Notes
-- currently in pre-alpha
-- MVP only
-- starting alpha development
+> 📘 Project State
+> 
+> The project is currently in pre-alpha.
+> `main` does contain the MVP but is deplyed as a static info website only.
 
 
 ## 📎 General
@@ -46,8 +46,10 @@ Current features include:
 Merge requests must only merge into `dev`. The `main` branch is only updated by merges from `dev`.
 
 ### 🧰 Services
+
 - Frontend Deployment: A combination of Cloudflare [Pages](https://pages.cloudflare.com/) and [Workers](https://workers.cloudflare.com/) allows for automated deployments.
-- Backend Deployment: [Coolify](https://coolify.io/) is connected the Frontend Deployment using a Cloudflare [Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/).
+- Backend Deployment: We use [Coolify](https://coolify.io/) to manage our backend deployments.
+- User Management: To manage users we rely on [Auth0](https://auth0.com/).
 
 
 ## 🛠 Setup
@@ -60,7 +62,6 @@ git clone git@github.com:benedictdaske/nextsesh.git
 ```
 
 Make sure you have installed uv for Python dependencies and npm for TypeScript dependencies.
-
 
 ### 📦 Dependencies
 [npm](https://github.com/npm) manages the frontend dependencies. To install, run the following command:
@@ -93,10 +94,7 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 
 Then copy the random string as `DJANGO_SECRET_KEY` into the backend `.env`.
 
-
-
-<!-- 
-## 🪝 Pre-commit hooks
+<!-- ### 🪝 Pre-commit hooks
 
 We use pre-commit to ensure the code quality locally. The package pre-commit will be installed with poetry's dev dependencies. To install the pre-commit hooks, run the following command:
 
@@ -104,81 +102,41 @@ We use pre-commit to ensure the code quality locally. The package pre-commit wil
 poetry run pre-commit install
 ```
 
-## 🔄 CI/CD
+### 🔄 CI/CD
 
 We use GitHub Actions for CI/CD. The pipeline is defined in `.github/workflows/python-ci.yml`. It checks the code formatting with `black`, the import order using `isort` and lints it with `flake8`. If the Pipeline fails, please manually run `black .`, `isort .` and `flake8` to see the errors and fix them locally. We recommend using black and isort on save, so you don't have to worry about it.
-Another option is to set up the pre-commit hook, which will run the checks before every commit.
-
-# 📝 Usage
-
-Within the root folder run
+Another option is to set up the pre-commit hook, which will run the checks before every commit. -->
 
 
-```bash
-export PYTHONPATH="../:./"
-```
+## 📝 Local Usage
 
-now, to run the backend server
+To start the frontend use `npm run dev` inside `/frontend`.
+
+To run the backend server from `/backend` use
 
 ```bash
-
-poetry run uvicorn  websocket.app:app --port 8080 --host localhost
+python manage.py runserver
 ```
 
+### 🔧 Database Changes
 
-## 🪂 Database connection and execution
-
-for execution, simply `cp .env.sample .env` in `hana/` and change `AIRMS_USERNAME` and `AIRMS_PASSWORD` to your Mount Sinai Credentials
-
-
-## ⚛ Rest API for development purposes
-
-1. Start the Backend Server (see at "Running the Backend Service") and NER as well as LLM applications if needed
-2. Send post request to the according routes you need for your purpose
-   The following example request (via terminal) gets a list of entities with concepts for the nlq that is provided:
+When making changes to the DB models or setup you need to apply and then start the backend once more. Use
 
 ```bash
-curl -X POST http://localhost:8080/ner -H "Content-Type: application/json" -d "{\"nlq\": \"Show me a list of patients over 60 years old who have been diagnosed with hypertension.\"}"
+python manage.py makemigrations
+python manage.py migrate
 ```
 
-### 🔗 Endpoints
+### 🎛️ Django Admin
 
-1. 🧬 **Health Check** `GET /liveness`: Returns a status message indicating the health of the API.
-   This endpoint is used to verify the health of the API. It should return a status message indicating that the API is operational.
+To create an admin user that is allowed access to the django admin panel use
 
-2. 📖 **Named Entity Recognition (NER)** `POST /ner`: Processes a natural language query to extract named entities and concepts.
-   This endpoint processes a natural language query to extract named entities and associated concepts. It returns the extracted entities along with the original text of the query.
-
-   - Parameters:
-     - `data (dict)`: A dictionary containing the natural language query under the key `nlq`.
-   - Returns:
-     - `dict`: A dictionary containing two keys: `ner_entities` (list of dictionaries representing entities with associated concepts) and `text` (original text of the query as processed by the NER module).
-
-3. ⚙️ **SQL Generation (Base)** `POST /sql_base`: Converts a natural language query into SQL without NER.
-   This endpoint converts a natural language query into SQL without utilizing NER. It directly generates SQL based on the input query.
-
-   - Parameters:
-     - `data (dict)`: A dictionary containing the natural language query under the key `nlq`.
-   - Returns:
-     - `dict`: A dictionary containing the key `sql`, with its value being the SQL query generated from the natural language input.
-
-4. 🔭 **SQL Generation (with Concepts)** `POST /sql_concepts`: Converts a natural language query into SQL with NER.
-   This endpoint converts a natural language query into SQL while utilizing NER to identify relevant concepts. It returns the SQL query along with the extracted entities and associated concepts.
-
-   - Parameters:
-     - `data (dict)`: A dictionary containing the natural language query under the key `nlq`.
-   - Returns:
-     - `dict`: A dictionary containing two keys: `sql` (SQL query generated from the natural language input) and `ner_entities` (list of dictionaries representing entities with associated concepts).
-
-5. 🐢 **Full Data Pipeline** `POST /full_pipeline`: Executes the full data processing pipeline from NLQ to SQL generation, and potentially to data retrieval.
-   This endpoint executes the complete data processing pipeline, including NLQ processing, NER, entity linking, and SQL conversion. It provides the SQL query, processed named entities, and placeholder for data retrieval.
-   - Parameters:
-     - `data (dict)`: A dictionary containing the natural language query under the key `nlq`.
-   - Returns:
-     - `dict`: A dictionary containing the SQL query (`sql`), the processed named entities (`ner_entities`), and the data rows retrieved by executing the SQL (`data`). Currently, data retrieval is an empty list pending the completion of database connection functionality.
+```bash
+python manage.py createsuperuser
+```
 
 
-# 🚀 Deployment
+## 🚀 Deployment
 
-When merging `dev` into `main` the pipeline will automatically build the docker image and push it to the docker hub. The production server will then pull the image and restart the container. 
-  -->
+When merging `dev` into `main` or `alpha-dev` into `alpha` Cloudflare Pages will automatically build and deploy the new frontend setup. Meanwhile, Coolify will do the same for the backend server. 
+ 
