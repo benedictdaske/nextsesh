@@ -42,4 +42,4 @@ COPY --from=build /app /app
 
 EXPOSE 8001
 
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3", "--threads", "2"]
+CMD ["gunicorn", "nextsesh.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3", "--threads", "2"]
