@@ -6,26 +6,20 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Install system dependencies for building packages
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency definitions first (for Docker cache)
 COPY pyproject.toml uv.lock* /app/
 
-# Install uv and sync dependencies directly into system Python
 RUN pip install --upgrade pip \
     && pip install uv \
-    && uv sync --frozen --system
+    && uv sync --frozen   # installs into /app/.venv
 
-# Copy the rest of the application
 COPY . /app/
 
-# Run Django build steps
-RUN python manage.py collectstatic --noinput \
-    && python manage.py migrate --noinput
+RUN .venv/bin/python manage.py collectstatic --noinput
 
 
 # ---------- Stage 2: Runtime ----------
@@ -36,15 +30,14 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Copy installed dependencies from build stage
-COPY --from=build /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
-COPY --from=build /usr/local/bin /usr/local/bin
+# Copy the virtual environment from build stage
+COPY --from=build /app/.venv /app/.venv
 
-# Copy application code
+# Make sure venv is always used
+ENV PATH="/app/.venv/bin:$PATH"
+
 COPY --from=build /app /app
 
-# Expose port (documentation only)
 EXPOSE 8001
 
-# Run Gunicorn (multi-worker setup for Raspberry Pi)
 CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3", "--threads", "2"]
