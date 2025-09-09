@@ -3,19 +3,20 @@ FROM python:3.13-slim AS build
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PIP_ROOT_USER_ACTION=ignore
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+build-essential \
+curl \
+&& rm -rf /var/lib/apt/lists/*
 
 COPY pyproject.toml uv.lock* /app/
 
 RUN pip install --upgrade pip \
-    && pip install uv \
-    && uv sync --frozen   # installs into /app/.venv
+&& pip install uv \
+&& uv sync --frozen   # installs into /app/.venv
 
 COPY . /app/
 
@@ -27,6 +28,7 @@ FROM python:3.13-slim AS runtime
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PIP_ROOT_USER_ACTION=ignore
 
 WORKDIR /app
 
