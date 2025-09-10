@@ -13,7 +13,7 @@
 	function onschedule() {
 		// push new session to API
         if (selected.startButtonIndex !== null && selected.endButtonIndex !== null) {
-			const endpoint = api_endpoint + 'sessions/'
+			const endpoint = api_endpoint + '/sessions/'
 
 			let startHour = gymTimePoints[selected.startButtonIndex].hour,
 				startMinute = gymTimePoints[selected.startButtonIndex].minute

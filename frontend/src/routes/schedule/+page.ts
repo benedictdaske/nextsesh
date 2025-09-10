@@ -8,6 +8,10 @@ import { auth } from '$lib/utils/auth-service.js';
 
 
 export async function load({ fetch }) {
+
+    const env = import.meta.env
+    const api_endpoint = env.VITE_API_ENDPOINT
+
     const oldGyms = get(GymStore)
     let gyms: Gym[] = []
     let defaultGym: Gym | null = null
@@ -17,7 +21,7 @@ export async function load({ fetch }) {
     }
 
     if (!oldGyms.length) {
-        const endpoint = 'http://localhost:8000/api/gyms/'
+        const endpoint = api_endpoint + '/gyms/'
         const response = await fetch(endpoint, {
             method: 'GET',
             headers: {
@@ -43,7 +47,7 @@ export async function load({ fetch }) {
         defaultGym = gyms.find(gym => gym.default === true) ?? null
     }
     
-    const endpoint = 'http://localhost:8000/api/sessions/'
+    const endpoint = api_endpoint + '/sessions/'
     const response = await fetch(endpoint, {
         method: 'GET',
         headers: {

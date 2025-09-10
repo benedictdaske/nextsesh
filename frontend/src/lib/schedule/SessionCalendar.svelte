@@ -7,8 +7,12 @@
 	import { get } from "svelte/store";
 	import { user } from "$stores/user-store";
 
+	const env = import.meta.env
+	const api_endpoint = env.VITE_API_ENDPOINT
+
+    
     function handleDelete(id: number) {
-        const endpoint = `http://localhost:8000/api/sessions/${id}/`
+        const endpoint = api_endpoint + `/sessions/${id}/`
         fetch(endpoint, {
             method: 'DELETE',
             headers: {
