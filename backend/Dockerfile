@@ -20,8 +20,6 @@ RUN pip install --upgrade pip \
 
 COPY . /app/
 
-RUN .venv/bin/python manage.py collectstatic --noinput
-
 
 # ---------- Stage 2: Runtime ----------
 FROM python:3.13-slim AS runtime
@@ -46,5 +44,10 @@ ENV PATH="/app/.venv/bin:$PATH"
 COPY --from=build /app /app
 
 EXPOSE 3000
+
+COPY migrate-entrypoint.sh /app/migrate-entrypoint.sh
+RUN chmod +x /app/migrate-entrypoint.sh
+
+ENTRYPOINT ["/app/migrate-entrypoint.sh"]
 
 CMD ["gunicorn", "nextsesh.wsgi:application", "--bind", "[::]:3000", "--workers", "3", "--threads", "2"]
