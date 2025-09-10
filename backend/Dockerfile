@@ -32,6 +32,10 @@ ENV PIP_ROOT_USER_ACTION=ignore
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y \
+curl \
+&& rm -rf /var/lib/apt/lists/*
+
 # Copy the virtual environment from build stage
 COPY --from=build /app/.venv /app/.venv
 
