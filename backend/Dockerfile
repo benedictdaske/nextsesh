@@ -45,6 +45,6 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 COPY --from=build /app /app
 
-EXPOSE 8080
+EXPOSE 3000
 
-CMD ["gunicorn", "nextsesh.wsgi:application", "--bind", "0.0.0.0:8080", "--workers", "3", "--threads", "2"]
+CMD ["gunicorn", "nextsesh.wsgi:application", "--bind", "0.0.0.0:3000", "--workers", "3", "--threads", "2"]
