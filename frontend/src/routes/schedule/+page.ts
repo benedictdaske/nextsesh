@@ -4,14 +4,11 @@ import { GymStore } from '$stores/gym-store';
 import { SessionStore } from '$stores/session-store';
 import { get } from 'svelte/store';
 import { token } from '$stores/auth-store';
-import { auth } from '$lib/utils/auth-service.js';
+import { auth } from '$lib/utils/auth-service';
+import { callApi } from '$lib/utils/api';
 
 
 export async function load({ fetch }) {
-
-    const env = import.meta.env
-    const api_endpoint = env.VITE_API_ENDPOINT
-
     const oldGyms = get(GymStore)
     let gyms: Gym[] = []
     let defaultGym: Gym | null = null
@@ -21,12 +18,10 @@ export async function load({ fetch }) {
     }
 
     if (!oldGyms.length) {
-        const endpoint = api_endpoint + '/gyms/'
-        const response = await fetch(endpoint, {
+        const response = await callApi('/gyms', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${get(token)}`
             }
         })
         const data = await response.json()
@@ -47,12 +42,10 @@ export async function load({ fetch }) {
         defaultGym = gyms.find(gym => gym.default === true) ?? null
     }
     
-    const endpoint = api_endpoint + '/sessions/'
-    const response = await fetch(endpoint, {
+    const response = await callApi('/sessions', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${get(token)}`
         }
     })
     const data = await response.json()

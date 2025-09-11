@@ -2,18 +2,13 @@
 	import { SessionStore } from '$stores/session-store'
 	import { selected } from '$lib/shared.svelte'
 	import { dateTimeToISOString } from '$lib/utils/datetime'
-	import { token } from '$stores/auth-store'
-	import { get } from 'svelte/store';
+	import { callApi } from '$lib/utils/api'
 
 	let { gymTimePoints } = $props()
-
-	const env = import.meta.env
-	const api_endpoint = env.VITE_API_ENDPOINT
 
 	function onschedule() {
 		// push new session to API
         if (selected.startButtonIndex !== null && selected.endButtonIndex !== null) {
-			const endpoint = api_endpoint + '/sessions/'
 
 			let startHour = gymTimePoints[selected.startButtonIndex].hour,
 				startMinute = gymTimePoints[selected.startButtonIndex].minute
@@ -26,11 +21,10 @@
 				end: dateTimeToISOString(selected.date ?? null, endHour, endMinute)
 			}
 
-			fetch(endpoint, {
+			callApi('/sessions', {
 				method: 'POST',
 				headers: {
       				"Content-Type": "application/json",
-					"Authorization": `Bearer ${get(token)}`
 				},
 				body: JSON.stringify(newFormattedSession)
 			}).then(response => response.json()).then(data => {

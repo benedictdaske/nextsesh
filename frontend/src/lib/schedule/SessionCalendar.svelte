@@ -3,21 +3,15 @@
     import { SessionStore } from "$stores/session-store"
     import { GymStore } from "$stores/gym-store"
 	import { printFormatTime } from "$lib/utils/datetime"
-	import { token } from "$stores/auth-store";
 	import { get } from "svelte/store";
 	import { user } from "$stores/user-store";
-
-	const env = import.meta.env
-	const api_endpoint = env.VITE_API_ENDPOINT
-
+	import { callApi } from "$lib/utils/api";
     
     function handleDelete(id: number) {
-        const endpoint = api_endpoint + `/sessions/${id}/`
-        fetch(endpoint, {
-            method: 'DELETE',
-            headers: {
-                "Authorization": `Bearer ${get(token)}`
-            }
+        const apiPath = `/sessions/${id}/`
+
+        callApi(apiPath, {
+            method: 'DELETE'
         }).then(response => {
             if (response.status === 204) {
                 SessionStore.update(prev => prev.filter(session => session.id !== id))
