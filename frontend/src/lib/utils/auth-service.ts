@@ -1,7 +1,6 @@
 import { Auth0Client } from "@auth0/auth0-spa-js"
 import { isAuthenticated, user, token } from "$stores/auth-store"
 import { auth_config } from "$lib/config/auth-config"
-import { get } from "svelte/store"
 import { goto } from "$app/navigation"
 
 
@@ -9,9 +8,11 @@ function createAuth() {
     let client: Auth0Client | null = null
 
     const CALLBACK_HANDLED_KEY = "auth_redirect_handled"
+    const env = import.meta.env
+    const AUTH0_AUDIENCE = env.VITE_AUTH0_AUDIENCE
 
     const commonAuthParams = {
-        audience: "https://nextsesh.date/api",
+        audience: AUTH0_AUDIENCE,
         scope: "openid profile email offline_access"
     }
 
@@ -105,7 +106,7 @@ function createAuth() {
         try {
             const freshToken = await client.getTokenSilently({
                 authorizationParams: {
-                    audience: "https://nextsesh.date/api"
+                    audience: AUTH0_AUDIENCE
                 }
             })
             token.set(freshToken)
