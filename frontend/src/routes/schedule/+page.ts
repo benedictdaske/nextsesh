@@ -18,7 +18,7 @@ export async function load({ fetch }) {
     }
 
     if (!oldGyms.length) {
-        const response = await callApi('/gyms', {
+        const response = await callApi('/gyms/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function load({ fetch }) {
         defaultGym = gyms.find(gym => gym.default === true) ?? null
     }
     
-    const response = await callApi('/sessions', {
+    const response = await callApi('/sessions/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

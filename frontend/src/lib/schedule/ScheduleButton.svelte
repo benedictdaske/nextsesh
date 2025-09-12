@@ -21,7 +21,7 @@
 				end: dateTimeToISOString(selected.date ?? null, endHour, endMinute)
 			}
 
-			callApi('/sessions', {
+			callApi('/sessions/', {
 				method: 'POST',
 				headers: {
       				"Content-Type": "application/json",

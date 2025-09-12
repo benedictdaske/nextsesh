@@ -8,7 +8,7 @@
     onMount(async () => {
         await auth.init()
 
-        const res = await callApi('/me', {
+        const res = await callApi('/me/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
