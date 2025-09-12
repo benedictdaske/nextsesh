@@ -8,8 +8,6 @@
     onMount(async () => {
         await auth.init()
 
-        // const idToken = await auth.getIdToken()
-
         const res = await callApi('/me', {
             method: 'GET',
             headers: {

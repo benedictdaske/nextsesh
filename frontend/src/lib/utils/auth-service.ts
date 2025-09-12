@@ -137,7 +137,6 @@ function createAuth() {
         handleRedirectCallback,
         logout,
         getAccessToken,
-        // getIdToken
     }
 }
 
