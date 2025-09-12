@@ -141,6 +141,12 @@ MEDIA_URL = '/media/'
 # cross-origin resource sharing
 
 CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173', 'http://localhost:5173', 'https://nextsesh.date', 'https://alpha.nextsesh.date']
+    
+CSRF_TRUSTED_ORIGINS = [
+    "https://nextsesh.date",
+    "https://alpha.nextsesh.date",
+    "https://api.nextsesh.date",
+]
 
 # server timzone
 
