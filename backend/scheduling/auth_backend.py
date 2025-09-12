@@ -30,9 +30,16 @@ class Auth0JWTAuthentication(BaseAuthentication):
                 token,
                 jwks,
                 claims_options={
-                    'aud': {'essential': True, 'value': settings.AUTH0_AUDIENCE},
-                    'iss': {'essential': True, 'value': settings.AUTH0_ISSUER},
-                }   
+                    "aud": {
+                        "essential": True,
+                        "values": [
+                            settings.AUTH0_AUDIENCE,
+                            settings.AUTH0_ISSUER + 'userinfo'
+                        ]
+                    },
+                    "iss": {"essential": True, "value": settings.AUTH0_ISSUER},
+                }
+  
             )
             claims.validate()
         except ExpiredTokenError:

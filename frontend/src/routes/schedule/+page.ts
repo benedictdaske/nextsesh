@@ -36,7 +36,7 @@ export async function load({ fetch }) {
             opening_time: parseTimeField(gym.opening_time),
             closing_time: parseTimeField(gym.closing_time),
         }))
-        
+
         GymStore.set(gyms)
         
         defaultGym = gyms.find(gym => gym.default === true) ?? null
