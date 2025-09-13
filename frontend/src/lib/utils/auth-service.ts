@@ -17,12 +17,10 @@ function createAuth() {
     }
 
     async function init() {
-        // console.log("entering init")
         // server side rendering safeguard
         if (typeof window === 'undefined') return 
         
         if (!client) {
-            // console.log("test1")
             client = new Auth0Client({
                 domain: auth_config.domain,
                 clientId: auth_config.client_id,
@@ -39,7 +37,6 @@ function createAuth() {
         const redirectHandled = sessionStorage.getItem(CALLBACK_HANDLED_KEY)
         
         if (isCallback && !redirectHandled) {
-            // console.log("test2")
             try {
                 if (window.location.search.includes("code=") && window.location.search.includes("state=")) {
                     sessionStorage.setItem(CALLBACK_HANDLED_KEY, "true")
@@ -56,16 +53,9 @@ function createAuth() {
         isAuthenticated.set(loggedIn)
         
         if (loggedIn) {
-            // console.log("test3")
-            const accessToken =  await client.getTokenSilently({
-                authorizationParams: {
-                    ...commonAuthParams
-                }
-            })
-            token.set(accessToken)
+            getAccessToken()
         }
         
-        // console.log("exiting init")
     }
     
     async function loginWithRedirect() {
@@ -80,7 +70,6 @@ function createAuth() {
     async function handleRedirectCallback() {
         if (!client) return
         await client.handleRedirectCallback()
-        // await init()
     }
     
     async function logout() {
@@ -106,7 +95,7 @@ function createAuth() {
         try {
             const freshToken = await client.getTokenSilently({
                 authorizationParams: {
-                    audience: AUTH0_AUDIENCE
+                    ...commonAuthParams
                 }
             })
             token.set(freshToken)
@@ -123,13 +112,6 @@ function createAuth() {
         }
         
     }
-    
-    // TODO syncing login state across tabs 
-    // window.addEventListener("storage", (event) => {
-    //     if (event.key === "isAuthenticated") {
-    //         isAuthenticated.set(event.newValue === "true");
-    //     }
-    // });
 
     return {
         init,
