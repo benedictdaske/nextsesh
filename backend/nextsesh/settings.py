@@ -30,7 +30,13 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'api.nextsesh.date', 'api.nextsesh.date']
+ALLOWED_HOSTS = [
+    'localhost',
+    'api.nextsesh.date',
+    'api.nextsesh.date',
+    r"^https://([a-z0-9-]+\.)*nextsesh-alpha\.pages\.dev$",
+]
+
 
 
 # Application definition
@@ -140,7 +146,12 @@ MEDIA_URL = '/media/'
 
 # cross-origin resource sharing
 
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173', 'http://localhost:5173', 'https://nextsesh.date', 'https://alpha.nextsesh.date']
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'https://nextsesh.date',
+    'https://alpha.nextsesh.date',
+    '.nextsesh-alpha.pages.dev',
+]
     
 CSRF_TRUSTED_ORIGINS = [
     "https://nextsesh.date",
