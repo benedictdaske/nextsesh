@@ -53,9 +53,8 @@ function createAuth() {
         isAuthenticated.set(loggedIn)
         
         if (loggedIn) {
-            getAccessToken()
+            await getAccessToken()
         }
-        
     }
     
     async function loginWithRedirect() {
@@ -110,7 +109,6 @@ function createAuth() {
             
             throw e
         }
-        
     }
 
     return {

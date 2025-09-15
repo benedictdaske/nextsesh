@@ -14,7 +14,7 @@
                 'Content-Type': 'application/json',
             }
         })
-
+        
         if (res.ok) {
             const userData = await res.json()
             user.set(userData)

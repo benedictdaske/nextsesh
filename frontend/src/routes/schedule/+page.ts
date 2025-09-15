@@ -23,7 +23,7 @@ export async function load({ fetch }) {
             headers: {
                 'Content-Type': 'application/json',
             }
-        })
+        }, fetch)
         const data = await response.json()
         
         if (!response.ok) {
@@ -47,7 +47,7 @@ export async function load({ fetch }) {
         headers: {
             'Content-Type': 'application/json',
         }
-    })
+    }, fetch)
     const data = await response.json()
     
     if (!response.ok) {
