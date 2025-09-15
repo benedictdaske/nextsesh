@@ -150,7 +150,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://nextsesh.date',
     'https://alpha.nextsesh.date',
 ]
-CORS_ALLOWED_ORIGINS_REGEXES = [
+CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://([a-z0-9-]+\.)*nextsesh-alpha\.pages\.dev$",
 ]
     
