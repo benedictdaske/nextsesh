@@ -33,8 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'api.nextsesh.date',
-    'api.nextsesh.date',
-    '.nextsesh-alpha.pages.dev',
+    'dev-api.nextsesh.date',
 ]
 
 
@@ -159,6 +158,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://nextsesh.date",
     "https://alpha.nextsesh.date",
     "https://api.nextsesh.date",
+    "https://dev-api.nextsesh.date",
 ]
 
 # server timzone
