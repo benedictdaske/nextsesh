@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'api.nextsesh.date',
     'api.nextsesh.date',
-    r"^https://([a-z0-9-]+\.)*nextsesh-alpha\.pages\.dev$",
+    '.nextsesh-alpha.pages.dev',
 ]
 
 
@@ -150,7 +150,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'https://nextsesh.date',
     'https://alpha.nextsesh.date',
-    '.nextsesh-alpha.pages.dev',
+    r"^https://([a-z0-9-]+\.)*nextsesh-alpha\.pages\.dev$",
 ]
     
 CSRF_TRUSTED_ORIGINS = [
