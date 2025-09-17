@@ -33,10 +33,12 @@ class GymViewSet(viewsets.ModelViewSet):
 #     serializer_class = SessionSerializer
 
 class SessionViewSet(viewsets.ModelViewSet):
-    today = datetime.now(ZoneInfo("Europe/Berlin")).date()
-    queryset = Session.objects.all().filter(start__gte=today).order_by('id')
     serializer_class = SessionSerializer
     permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self, *args, **kwargs):
+        today = datetime.now(ZoneInfo("Europe/Berlin")).date()
+        return Session.objects.all().filter(start__gte=today).order_by('id')
     
     def create(self, request, *args, **kwargs):
         print("Received request data:", request.data)
