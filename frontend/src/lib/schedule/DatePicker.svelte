@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { selected } from "$lib/shared.svelte"
 	import { addDaysToDate } from "$lib/utils/datetime"
+	import { selected } from "$stores/selected-store";
 
 
     const today = new Date()
-    selected.date = today
+    $selected.date = today
 
     function handleClick(days: number) {
-        selected.date = addDaysToDate(today, days)
-        // console.log('Selected date:', selected.date.toLocaleString('de-DE', { day: '2-digit', month: '2-digit' }))
+        $selected.date = addDaysToDate(today, days)
+        // console.log('Selected date:', $selected.date.toLocaleString('de-DE', { day: '2-digit', month: '2-digit' }))
     }
 
     function isSelected(days: number) {
-        if (selected.date?.toLocaleDateString() === addDaysToDate(today, days).toLocaleDateString()) {
+        if ($selected.date?.toLocaleDateString() === addDaysToDate(today, days).toLocaleDateString()) {
             return true
         }
         return false

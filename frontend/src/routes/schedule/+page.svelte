@@ -1,14 +1,14 @@
 <script lang="ts">
     import SchedulingComponent from "$lib/schedule/SchedulingComponent.svelte"
 	import SessionCalendar from "$lib/schedule/SessionCalendar.svelte"
-    import { selected } from "$lib/shared.svelte"
 	import { goto } from "$app/navigation";
 	import { isAuthenticated } from "$stores/auth-store";
+	import { selected } from "$stores/selected-store";
 
     export let data;
     
     if (data.defaultGym) {
-        selected.gym = data.defaultGym;
+        $selected.gym = data.defaultGym;
     }
 
 </script>

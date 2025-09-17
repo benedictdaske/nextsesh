@@ -1,25 +1,27 @@
 <script lang="ts">
 	import { SessionStore } from '$stores/session-store'
-	import { selected } from '$lib/shared.svelte'
 	import { dateTimeToISOString } from '$lib/utils/datetime'
 	import { callApi } from '$lib/utils/api'
+	import { selected } from '$stores/selected-store';
 
-	let { gymTimePoints } = $props()
+	let { gymTimePoints, onclear } = $props()
 
 	function onschedule() {
 		// push new session to API
-        if (selected.startButtonIndex !== null && selected.endButtonIndex !== null) {
+        if ($selected.startButtonIndex !== null && $selected.endButtonIndex !== null) {
 
-			let startHour = gymTimePoints[selected.startButtonIndex].hour,
-				startMinute = gymTimePoints[selected.startButtonIndex].minute
-			let endHour = gymTimePoints[selected.endButtonIndex].hour,
-				endMinute = gymTimePoints[selected.endButtonIndex].minute
+			let startHour = gymTimePoints[$selected.startButtonIndex].hour,
+				startMinute = gymTimePoints[$selected.startButtonIndex].minute
+			let endHour = gymTimePoints[$selected.endButtonIndex].hour,
+				endMinute = gymTimePoints[$selected.endButtonIndex].minute
 
 			let newFormattedSession = {
-				gym: selected.gym?.id,
-				start: dateTimeToISOString(selected.date ?? null, startHour, startMinute),
-				end: dateTimeToISOString(selected.date ?? null, endHour, endMinute)
+				gym: $selected.gym?.id,
+				start: dateTimeToISOString($selected.date ?? null, startHour, startMinute),
+				end: dateTimeToISOString($selected.date ?? null, endHour, endMinute)
 			}
+
+			onclear()
 
 			callApi('/sessions/', {
 				method: 'POST',
