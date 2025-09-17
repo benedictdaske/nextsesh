@@ -34,7 +34,7 @@
 
                         <div class="flex flex-col items-center gap-2">
                             <p class="text-lg font-bold"> {session.user.username} </p>
-                            <p class="text-sm"> {session.start.toLocaleString('de-DE', { day: '2-digit', month: '2-digit' })} </p>
+                            <p class="text-sm"> {session.start.toLocaleString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' })} </p>
                             <p class="text-sm"> {printFormatTime(session.start)} - {printFormatTime(session.end)} </p>
                             <p class="text-sm"> {($GymStore.find(gym => gym.id == session.gym)?.name || 'Unknown Gym')} </p>
 

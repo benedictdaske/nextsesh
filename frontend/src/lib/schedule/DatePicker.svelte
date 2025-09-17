@@ -22,15 +22,15 @@
 
 <div class="relative flex flex-row my-10 justify-between">
     
-    {#each {length: 8} as _, i}
+    {#each {length: 7} as _, i}
 
         {#if isSelected(i)}
             <button type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
-                {addDaysToDate(today, i).toLocaleString('de-DE', { day: '2-digit', month: '2-digit' })}
+                {addDaysToDate(today, i).toLocaleString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' })}
             </button>
         {:else}
             <button onclick={() => handleClick(i)} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                {addDaysToDate(today, i).toLocaleString('de-DE', { day: '2-digit', month: '2-digit' })}
+                {addDaysToDate(today, i).toLocaleString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' })}
             </button>
         {/if}
 
