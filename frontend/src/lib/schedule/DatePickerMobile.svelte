@@ -20,18 +20,18 @@
 
 </script>
 
-<div class="relative flex flex-row py-8 justify-between">
+<div class="relative flex flex-row py-8 justify-between gap-1.5">
     
     {#each {length: 7} as _, i}
 
         {#if isSelected(i)}
-            <button type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-full border border-transparent bg-blue-600 text-white focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
+            <button type="button" class="py-2 px-3 w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-full border border-transparent bg-blue-600 text-white focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
                 {addDaysToDate(today, i).toLocaleString('de-DE', { weekday: 'short' })}
                 <br />
                 {addDaysToDate(today, i).getDate()}
             </button>
         {:else}
-            <button onclick={() => handleClick(i)} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-full border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">                
+            <button onclick={() => handleClick(i)} type="button" class="py-2 px-3 w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-full border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">                
                 {addDaysToDate(today, i).toLocaleString('de-DE', { weekday: 'short' })}
                 <br />
                 {addDaysToDate(today, i).getDate()}
