@@ -1,6 +1,8 @@
 <script lang="ts">
     import SchedulingComponent from "$lib/schedule/SchedulingComponent.svelte"
 	import SessionCalendar from "$lib/schedule/SessionCalendar.svelte"
+    import SchedulingComponentMobile from "$lib/schedule/SchedulingComponentMobile.svelte"
+    import SessionCalendarMobile from "$lib/schedule/SessionCalendarMobile.svelte"
 	import { goto } from "$app/navigation";
 	import { isAuthenticated } from "$stores/auth-store";
 	import { selected } from "$stores/selected-store";
@@ -14,8 +16,27 @@
 </script>
 
 
-<div class="flex flex-col justify-evenly items-center min-h-screen">
-    
+<div class="flex lg:hidden flex-col justify-evenly items-center min-h-screen">
+
+    <div class="flex flex-col justify-center items-center">
+        <button onclick={() => goto('/')} class="flex h-1/3 pt-8 justify-center items-center cursor-pointer">
+            <h1 class="text-5xl font-bold"> nextsesh </h1>
+        </button>
+
+        {#if $isAuthenticated }
+            <SchedulingComponentMobile />
+            <!-- <SessionCalendarMobile /> -->
+        {:else}
+            <div class="flex flex-1 h-1/3 pt-10 justify-center items-start">
+                <p class="text-l"> Please log in to view and schedule sessions. </p>
+            </div>
+        {/if}
+    </div>
+        
+</div>
+
+<div class="hidden lg:flex flex-col justify-evenly items-center min-h-screen">
+
     <div class="flex flex-col justify-center items-center">
         <button onclick={() => goto('/')} class="flex h-1/3 pt-10 justify-center items-center cursor-pointer">
             <h1 class="text-6xl font-bold"> nextsesh </h1>
