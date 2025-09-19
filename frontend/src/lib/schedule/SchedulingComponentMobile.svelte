@@ -3,33 +3,53 @@
 
 	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
-	import DatePickerMobile from './DatePickerMobile.svelte';
-	import ScheduleButtonMobile from './ScheduleButtonMobile.svelte';
+    import { showMinutePicker } from '$stores/overlay-store';
+	import DatePickerMobile from '$lib/schedule/DatePickerMobile.svelte';
+	import ScheduleButtonMobile from '$lib/schedule/ScheduleButtonMobile.svelte';
+	import MinutePickerMobile from '$lib/schedule/MinutePickerMobile.svelte';
 
     let openingHour = $derived($selected.gym?.opening_time.getHours() || 0)
     let closingHour = $derived($selected.gym?.closing_time.getHours() || 0)
 
-    function handleClick(index: number) {
-        const hour = index + openingHour
+    let selectedIndex: number | null = $state(null)
 
-        if (hour === $selected.startHour) { // button is same as start button -> unselect
-            $selected.startHour = null
-            if ($selected.endHour) { // end moves to start
-                $selected.startHour = $selected.endHour
-                $selected.endHour = null
-            }
-        } else if (hour === $selected.endHour) { // button is same as end button -> unselect
-            $selected.endHour = null
-        } else if ($selected.startHour === null && $selected.endHour === null) { // both not set -> set start
+    function updateHours(hour: number, index: number) {
+        if ($selected.startHour === null && $selected.endHour === null) { // both not set -> set start
             $selected.startHour = hour
+            $selected.startIndex = index
         } else if ($selected.startHour !== null && $selected.endHour === null) { // start set, end not set -> set end
             if (hour > $selected.startHour) { // button after start -> set button as end
                 $selected.endHour = hour
+                $selected.endIndex = index
             } else { // button before start -> move start to end, set button as start
                 $selected.endHour = $selected.startHour
+                $selected.endIndex = $selected.startIndex
                 $selected.startHour = hour
+                $selected.startIndex = index
             }
         }
+
+    }
+
+    function handleIndex(index: number) {
+        // both selected -> no-op
+        if ($selected.startHour !== null && $selected.endHour !== null) {
+            if (index === $selected.startIndex || index === $selected.endIndex) {
+                selectedIndex = index
+                showMinutePicker.set(true)
+            }
+            return
+        }
+
+        selectedIndex = index
+        showMinutePicker.set(true)
+    }
+
+    function handleClick(index: number) {
+        handleIndex(index)
+
+        const hour = index + openingHour
+        updateHours(hour, index)
     }
     
     function onclear() {
@@ -66,21 +86,23 @@
             {#if $selected.gym === null}
                 <p class="text-l"> Please select a gym to view available time slots. </p>
             {:else}
-                {#each {length: closingHour - openingHour + 1} as _, i}
-
-                    {#if isHighlighted(i)}
-                        <button onclick={() => handleClick(i)} type="button" class="bg-blue-400 py-2 px-3 min-w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-blue-400 focus:outline-hidden focus:bg-blue-400 disabled:opacity-50 disabled:pointer-events-none">
-                            {i + openingHour}
-                        </button>        
-                        {:else}
-                        <button onclick={() => handleClick(i)} type="button" class="bg-blue-600 py-2 px-3 min-w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-blue-600 focus:outline-hidden focus:bg-blue-600 disabled:opacity-50 disabled:pointer-events-none">
-                            {i + openingHour}
-                        </button>
-                    {/if}
-                
-                {/each}
-            {/if}
             
+                {#each {length: closingHour - openingHour + 1} as _, i}
+                    <button onclick={() => handleClick(i)} type="button"
+                        class={isHighlighted(i)
+                            ? "relative bg-blue-400 py-2 px-3 min-w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none"
+                            : "relative bg-blue-600 py-2 px-3 min-w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none"
+                    }>
+                        {i + openingHour}
+
+                        {#if $showMinutePicker && selectedIndex === i}
+                            <MinutePickerMobile index={i} hour={i + openingHour} />
+                        {/if}
+                    </button>        
+                {/each}
+                    
+            {/if}
+
         </div>
     </div>
     

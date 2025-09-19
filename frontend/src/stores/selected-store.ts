@@ -6,8 +6,10 @@ export const selected = writable({
     date: null as Date | null,
     startButtonIndex: null as number | null,
     endButtonIndex: null as number | null,
+    startIndex: null as number | null,
     startHour: null as number | null,
     startMinute: null as number | null,
+    endIndex: null as number | null,
     endHour: null as number | null,
     endMinute: null as number | null
 })

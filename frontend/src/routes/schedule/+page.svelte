@@ -19,7 +19,7 @@
 <div class="flex lg:hidden flex-col justify-evenly items-center min-h-screen">
 
     <div class="flex flex-col justify-center items-center">
-        <button onclick={() => goto('/')} class="flex h-1/3 py-12 justify-center items-center cursor-pointer">
+        <button onclick={() => goto('/')} class="flex h-1/3 my-12 justify-center items-center cursor-pointer">
             <h1 class="text-5xl font-bold"> nextsesh </h1>
         </button>
 
