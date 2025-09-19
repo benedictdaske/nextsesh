@@ -22,37 +22,25 @@
 </script>
 
 
-<div class="w-full">
-    <div class="flex flex-col justify-center items-center gap-10">
-      
-        <div class="w-fit">
-            
-            <div class="container w-fit bg-gray-200 p-6 rounded-lg shadow-lg">
-                <div class="grid grid-cols-4 md:grid-cols-8 gap-4 justify-items-center">
-                    
-                    {#each $SessionStore as session}
 
-                        <div class="flex flex-col items-center gap-2">
-                            <p class="text-lg font-bold"> {session.user.username} </p>
-                            <p class="text-sm"> {session.start.toLocaleString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' })} </p>
-                            <p class="text-sm"> {printFormatTime(session.start)} - {printFormatTime(session.end)} </p>
-                            <p class="text-sm"> {($GymStore.find(gym => gym.id == session.gym)?.name || 'Unknown Gym')} </p>
+<div class="flex flex-col max-w-80 p-4 gap-y-1 justify-items-center bg-gray-200 rounded-lg shadow-lg">
+    
+    {#each $SessionStore as session}
 
-                            {#if session.user.auth0_sub === get(user)?.auth0_sub}
+        <div class="flex gap-x-2 justify-evenly items-center">
+            <p class="text-xs font-semibold"> {session.user.username} </p>
+            <p class="text-xs"> {session.start.toLocaleString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' })} </p>
+            <p class="text-xs"> {printFormatTime(session.start)} - {printFormatTime(session.end)} </p>
+            <p class="text-xs"> {($GymStore.find(gym => gym.id == session.gym)?.name || 'Unknown Gym')} </p>
 
-                                <button onclick={() => handleDelete(session.id)} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-300 text-white hover:bg-red-500 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
-                                    DELETE
-                                </button>
-                            {/if}
-
-                        </div>
-
-                    {/each}
-                                        
-                </div>
-            </div>
+            {#if session.user.auth0_sub === get(user)?.auth0_sub}
+                <button onclick={() => handleDelete(session.id)} type="button" class="p-1 inline-flex items-center justify-center gap-x-2 text-xs font-medium rounded-lg border border-transparent bg-red-300 text-white hover:bg-red-500 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
+                    DELETE
+                </button>
+            {/if}
 
         </div>
-        
-    </div>
+
+    {/each}
+                        
 </div>

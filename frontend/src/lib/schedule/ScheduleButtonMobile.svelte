@@ -4,16 +4,16 @@
 	import { callApi } from '$lib/utils/api'
 	import { selected } from '$stores/selected-store';
 
-	let { gymTimePoints, onclear } = $props()
+	let { onclear } = $props()
 
 	function onschedule() {
 		// push new session to API
-        if ($selected.startButtonIndex !== null && $selected.endButtonIndex !== null) {
+        if ($selected.startHour !== null && $selected.endHour !== null) {
 
-			let startHour = gymTimePoints[$selected.startButtonIndex].hour,
-				startMinute = gymTimePoints[$selected.startButtonIndex].minute
-			let endHour = gymTimePoints[$selected.endButtonIndex].hour,
-				endMinute = gymTimePoints[$selected.endButtonIndex].minute
+			let startHour = $selected.startHour,
+				startMinute = $selected.startMinute || 0
+			let endHour = $selected.endHour,
+				endMinute = $selected.endMinute || 0
 
 			let newFormattedSession = {
 				gym: $selected.gym?.id,

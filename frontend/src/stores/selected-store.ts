@@ -7,5 +7,7 @@ export const selected = writable({
     startButtonIndex: null as number | null,
     endButtonIndex: null as number | null,
     startHour: null as number | null,
-    endHour: null as number | null
+    startMinute: null as number | null,
+    endHour: null as number | null,
+    endMinute: null as number | null
 })

@@ -25,7 +25,9 @@
 
         {#if $isAuthenticated }
             <SchedulingComponentMobile />
-            <!-- <SessionCalendarMobile /> -->
+            <div class="pt-10">
+                <SessionCalendarMobile />
+            </div>
         {:else}
             <div class="flex flex-1 h-1/3 pt-10 justify-center items-start">
                 <p class="text-l"> Please log in to view and schedule sessions. </p>
