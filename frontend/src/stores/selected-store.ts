@@ -5,5 +5,7 @@ export const selected = writable({
     gym: null as Gym | null,
     date: null as Date | null,
     startButtonIndex: null as number | null,
-    endButtonIndex: null as number | null
+    endButtonIndex: null as number | null,
+    startHour: null as number | null,
+    endHour: null as number | null
 })
