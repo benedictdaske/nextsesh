@@ -2,10 +2,10 @@
     import type { Gym, TimePoint } from '$lib/types'
     import { constructTimePoints } from '$lib/utils/datetime'
 
-    import ScheduleButton from '$lib/schedule/ScheduleButton.svelte'
 	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
 	import DatePickerMobile from './DatePickerMobile.svelte';
+	import ScheduleButtonMobile from './ScheduleButtonMobile.svelte';
 
 
     let gymTimePoints: TimePoint[] = $derived(constructTimePoints($selected.gym))
@@ -58,12 +58,12 @@
 </script>
 
 
-<div class="flex flex-col w-full justify-center items-center gap-10">
+<div class="flex flex-col w-full justify-center items-center gap-y-8">
         
     <DatePickerMobile />
 
-    <div class="container w-fit bg-gray-200 p-6 rounded-lg shadow-lg">
-        <div class="grid grid-cols-4 md:grid-cols-8 gap-4 justify-items-center">
+    <div class="w-full bg-gray-200 p-4 rounded-lg shadow-lg">
+        <div class="grid grid-cols-5 gap-y-4 justify-items-center">
             
             {#if $selected.gym === null}
                 <p class="text-l"> Please select a gym to view available time slots. </p>
@@ -86,13 +86,13 @@
         </div>
     </div>
     
-    <div class="relative flex flex-row my-10 justify-between">
+    <div class="flex w-full justify-between">
         
         <button onclick={onclear} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
             Clear Selection
         </button>
         
-        <ScheduleButton
+        <ScheduleButtonMobile
             {gymTimePoints}
             {onclear}
         />

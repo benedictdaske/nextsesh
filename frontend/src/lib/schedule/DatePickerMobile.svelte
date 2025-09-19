@@ -20,7 +20,7 @@
 
 </script>
 
-<div class="relative flex flex-row py-8 justify-between gap-1.5">
+<div class="relative flex flex-row justify-between gap-1.5">
     
     {#each {length: 7} as _, i}
 
