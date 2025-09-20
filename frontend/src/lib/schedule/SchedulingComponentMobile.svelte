@@ -14,20 +14,7 @@
     let selectedIndex: number | null = $state(null)
 
     function updateHours(hour: number, index: number) {
-        if ($selected.startHour === null && $selected.endHour === null) { // both not set -> set start
-            $selected.startHour = hour
-            $selected.startIndex = index
-        } else if ($selected.startHour !== null && $selected.endHour === null) { // start set, end not set -> set end
-            if (hour > $selected.startHour) { // button after start -> set button as end
-                $selected.endHour = hour
-                $selected.endIndex = index
-            } else { // button before start -> move start to end, set button as start
-                $selected.endHour = $selected.startHour
-                $selected.endIndex = $selected.startIndex
-                $selected.startHour = hour
-                $selected.startIndex = index
-            }
-        }
+        
 
     }
 
@@ -46,17 +33,27 @@
     }
 
     function handleClick(index: number) {
-        handleIndex(index)
+        if ($selected.startIndex !== null && $selected.endIndex !== null && $selected.startIndex !== index && $selected.endIndex !== index) { // button is not start or end
+            return
+        }
+        selectedIndex = index
+        showMinutePicker.set(true)
+    }
 
-        const hour = index + openingHour
-        updateHours(hour, index)
+    function onOutsideClick() {
+        selectedIndex = null
+        showMinutePicker.set(false)
     }
     
     function onclear() {
         selected.update(sel => ({
             ...sel,
+            startIndex: null,
             startHour: null,
-            endHour: null
+            startMinute: null,
+            endIndex: null,
+            endHour: null,
+            endMinute: null
         }))
     }
     
@@ -96,8 +93,13 @@
                         {i + openingHour}
 
                         {#if $showMinutePicker && selectedIndex === i}
+                            <!-- svelte-ignore a11y_click_events_have_key_events -->
+                            <!-- svelte-ignore a11y_no_static_element_interactions -->
+                            <div onclick={onOutsideClick} class="fixed inset-0 bg-black/30 z-40">
+                            </div>
                             <MinutePickerMobile index={i} hour={i + openingHour} />
                         {/if}
+
                     </button>        
                 {/each}
                     
