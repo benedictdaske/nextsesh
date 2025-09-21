@@ -39,11 +39,6 @@
         selectedIndex = index
         showMinutePicker.set(true)
     }
-
-    function onOutsideClick() {
-        selectedIndex = null
-        showMinutePicker.set(false)
-    }
     
     function onclear() {
         selected.update(sel => ({
@@ -93,10 +88,6 @@
                         {i + openingHour}
 
                         {#if $showMinutePicker && selectedIndex === i}
-                            <!-- svelte-ignore a11y_click_events_have_key_events -->
-                            <!-- svelte-ignore a11y_no_static_element_interactions -->
-                            <div onclick={onOutsideClick} class="fixed inset-0 bg-black/30 z-40">
-                            </div>
                             <MinutePickerMobile index={i} hour={i + openingHour} />
                         {/if}
 
