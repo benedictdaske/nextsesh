@@ -42,10 +42,10 @@
     }
 
     function setMinute(minute: number) {
-        if ($selected.startHour === hour)
-            $selected.startMinute = minute
-        else if ($selected.endHour === hour)
+        if ($selected.endHour === hour)
             $selected.endMinute = minute
+        else if ($selected.startHour === hour)
+            $selected.startMinute = minute
     }
 
     function onRemove(event: MouseEvent) {
@@ -67,7 +67,7 @@
 
     function onMinute(event: MouseEvent, minute: number) {
         event.stopPropagation()
-
+        
         setNewHour(index, hour)
         setMinute(minute)
 
