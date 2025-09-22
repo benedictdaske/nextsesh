@@ -13,24 +13,6 @@
 
     let selectedIndex: number | null = $state(null)
 
-    function updateHours(hour: number, index: number) {
-        
-
-    }
-
-    function handleIndex(index: number) {
-        // both selected -> no-op
-        if ($selected.startHour !== null && $selected.endHour !== null) {
-            if (index === $selected.startIndex || index === $selected.endIndex) {
-                selectedIndex = index
-                showMinutePicker.set(true)
-            }
-            return
-        }
-
-        selectedIndex = index
-        showMinutePicker.set(true)
-    }
 
     function handleClick(index: number) {
         if ($selected.startIndex !== null && $selected.endIndex !== null && $selected.startIndex !== index && $selected.endIndex !== index) { // button is not start or end
@@ -81,9 +63,13 @@
             
                 {#each {length: closingHour - openingHour + 1} as _, i}
                     <button onclick={() => handleClick(i)} type="button"
+                        class:border-t-2={i === $selected.startIndex && $selected.startMinute === 0 || i === $selected.endIndex && $selected.endMinute === 0}
+                        class:border-r-2={i === $selected.startIndex && $selected.startMinute === 15 || i === $selected.endIndex && $selected.endMinute === 15}
+                        class:border-b-2={i === $selected.startIndex && $selected.startMinute === 30 || i === $selected.endIndex && $selected.endMinute === 30}
+                        class:border-l-2={i === $selected.startIndex && $selected.startMinute === 45 || i === $selected.endIndex && $selected.endMinute === 45}
                         class={isHighlighted(i)
-                            ? "relative bg-blue-400 py-2 px-3 min-w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none"
-                            : "relative bg-blue-600 py-2 px-3 min-w-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-white hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none"
+                            ? "relative bg-blue-400 py-2 px-3 border-gray-600 w-10 h-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg text-white hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none"
+                            : "relative bg-blue-600 py-2 px-3 w-10 h-10 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg text-white hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none"
                     }>
                         {i + openingHour}
 
