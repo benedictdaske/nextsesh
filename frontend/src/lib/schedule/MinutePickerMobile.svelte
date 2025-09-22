@@ -67,9 +67,11 @@
 
     function onMinute(event: MouseEvent, minute: number) {
         event.stopPropagation()
-        
-        setNewHour(index, hour)
-        setMinute(minute)
+
+        if (!($selected.startHour === hour && $selected.startMinute === minute)) {
+            setNewHour(index, hour)
+            setMinute(minute)
+        }
 
         $showMinutePicker = false
     }
