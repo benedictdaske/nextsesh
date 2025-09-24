@@ -42,10 +42,19 @@
     }
 
     function setMinute(minute: number) {
+        // decide between start or end
         if ($selected.endHour === hour)
             $selected.endMinute = minute
         else if ($selected.startHour === hour)
             $selected.startMinute = minute
+        
+        // ensure startMinute <= endMinute if in same hour
+        if ($selected.startHour === hour && $selected.endHour === hour)
+            if ($selected.startMinute !== null && $selected.endMinute !== null && $selected.startMinute > $selected.endMinute) {
+                let tmp = $selected.startMinute
+                $selected.startMinute = $selected.endMinute
+                $selected.endMinute = tmp
+            }
     }
 
     function onRemove(event: MouseEvent) {
@@ -91,7 +100,6 @@
 <button type="button" onclick={onRemove} class="absolute w-10 h-10 z-50 bg-gray-100 outline-1 outline-gray-400 rounded-lg inline-flex items-center justify-center gap-x-2 text-sm font-medium border border-transparent text-gray-600 hover:bg-blue-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
     -
 </button>
-
 
 <div class="absolute flex bottom-full z-50 gap-x-2 p-1 mb-1 bg-white outline-1 outline-gray-400/90 rounded-full">
     <button type="button" onclick={(e) => onMinute(e,0)}

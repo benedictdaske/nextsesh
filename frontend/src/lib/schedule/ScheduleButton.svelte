@@ -15,14 +15,17 @@
 			let endHour = gymTimePoints[$selected.endButtonIndex].hour,
 				endMinute = gymTimePoints[$selected.endButtonIndex].minute
 
+			// iso date & selected gym
 			let newFormattedSession = {
 				gym: $selected.gym?.id,
 				start: dateTimeToISOString($selected.date ?? null, startHour, startMinute),
 				end: dateTimeToISOString($selected.date ?? null, endHour, endMinute)
 			}
 
+			// reset selection
 			onclear()
 
+			// call api & update store
 			callApi('/sessions/', {
 				method: 'POST',
 				headers: {

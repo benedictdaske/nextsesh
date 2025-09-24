@@ -10,6 +10,7 @@
     function handleDelete(id: number) {
         const apiPath = `/sessions/${id}/`
 
+        // call api & update store
         callApi(apiPath, {
             method: 'DELETE'
         }).then(response => {

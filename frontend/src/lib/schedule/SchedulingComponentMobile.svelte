@@ -13,9 +13,9 @@
 
     let selectedIndex: number | null = $state(null)
 
-
     function handleClick(index: number) {
-        if ($selected.startIndex !== null && $selected.endIndex !== null && $selected.startIndex !== index && $selected.endIndex !== index) { // button is not start or end
+        // button is not start or end but both are already selected
+        if ($selected.startIndex !== null && $selected.endIndex !== null && $selected.startIndex !== index && $selected.endIndex !== index) {
             return
         }
         selectedIndex = index
