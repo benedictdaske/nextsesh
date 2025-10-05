@@ -6,7 +6,6 @@ export type TimePoint = {
 export type Gym = {
     id: number
     name: string
-    default: boolean
     opening_time: Date
     closing_time: Date
     address: string | null

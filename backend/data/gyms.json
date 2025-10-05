@@ -1,0 +1,38 @@
+[
+    {
+        "name": "7A+",
+        "opening_time": "09:00:00",
+        "closing_time": "23:00:00",
+        "address": "Gartenstraße 2",
+        "postcode": "14482",
+        "city": "Potsdam",
+        "country": "Germany",
+        "website": "https://7aplus.de",
+        "instagram": "https://www.instagram.com/7aplus_boulderhalle",
+        "icon": ""
+    },
+    {
+        "name": "Elektra",
+        "opening_time": "08:00:00",
+        "closing_time": "23:00:00",
+        "address": "Gustav-Meyer-Allee 25",
+        "postcode": "13355",
+        "city": "Berlin",
+        "country": "Germany",
+        "website": "https://daselektra.de",
+        "instagram": "https://www.instagram.com/das_elektra",
+        "icon": ""
+    },
+    {
+        "name": "Berta Block",
+        "opening_time": "09:00:00",
+        "closing_time": "23:00:00",
+        "address": "Mühlenstraße 62",
+        "postcode": "13187",
+        "city": "Berlin",
+        "country": "Germany",
+        "website": "https://www.bertablock.de",
+        "instagram": "https://www.instagram.com/bertablockboulderhalle",
+        "icon": ""
+    }
+]

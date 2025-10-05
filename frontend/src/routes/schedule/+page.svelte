@@ -9,9 +9,7 @@
 
     export let data;
     
-    if (data.defaultGym) {
-        $selected.gym = data.defaultGym;
-    }
+    $selected.gym = data.gyms.length > 0 ? data.gyms[0] : null;
 
 </script>
 

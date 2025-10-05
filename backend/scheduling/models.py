@@ -23,15 +23,16 @@ class AppUser(models.Model):
 
 class Gym(models.Model):
     name = models.CharField(max_length=64)
-    default = models.BooleanField(default=False)
-    
     opening_time = models.TimeField()
     closing_time = models.TimeField()
     
     address = models.CharField(max_length=64, blank=True)
     postcode = models.CharField(max_length=16, blank=True)
     city = models.CharField(max_length=64, blank=True)
+    country = models.CharField(max_length=64, blank=True)
+
     website = models.URLField(blank=True)
+    instagram = models.URLField(blank=True)
     
     icon = models.ImageField(upload_to='icons/', blank=True)
     

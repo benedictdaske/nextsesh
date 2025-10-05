@@ -8,7 +8,7 @@ class GymSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Gym
-        fields = ('id', 'name', 'default', 'opening_time', 'closing_time', 'address', 'postcode', 'city', 'website', 'icon')
+        fields = ('id', 'name', 'opening_time', 'closing_time', 'address', 'postcode', 'city', 'country', 'website', 'instagram', 'icon')
         
     # def get_open(self, obj):
     #     return {'hour': obj.opening_time.hour, 'minute': obj.opening_time.minute}

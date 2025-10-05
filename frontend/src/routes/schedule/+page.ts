@@ -11,7 +11,6 @@ import { callApi } from '$lib/utils/api';
 export async function load({ fetch }) {
     const oldGyms = get(GymStore)
     let gyms: Gym[] = []
-    let defaultGym: Gym | null = null
 
     if (!get(token)) {
         await auth.init()
@@ -28,7 +27,7 @@ export async function load({ fetch }) {
         
         if (!response.ok) {
             console.error(`Failed to fetch gyms. Status ${response.status}: ` + response.statusText)
-            return { gyms: [], defaultGym: null, sessions: [] }
+            return { gyms: [], sessions: [] }
         }
 
         gyms = data.map((gym: any) => ({
@@ -38,8 +37,6 @@ export async function load({ fetch }) {
         }))
 
         GymStore.set(gyms)
-        
-        defaultGym = gyms.find(gym => gym.default === true) ?? null
     }
     
     const response = await callApi('/sessions/', {
@@ -52,7 +49,7 @@ export async function load({ fetch }) {
     
     if (!response.ok) {
         console.error(`Failed to fetch sessions. Status ${response.status}: ` + response.statusText)
-        return { gyms, defaultGym, sessions: [] }
+        return { gyms, sessions: [] }
     }
 
     const sessions: Session[] = data.map((session: any) => ({
@@ -62,7 +59,7 @@ export async function load({ fetch }) {
     }))
 
     SessionStore.set(sessions)
+    
 
-
-    return { gyms, defaultGym, sessions }
+    return { gyms, sessions }
 }
