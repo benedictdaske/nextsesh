@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes 
 from scheduling.models import Gym, Session
 from scheduling.serializers import GymSerializer, SessionSerializer, AppUserSerializer
+from scheduling.helpers import populate_gyms
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -23,6 +24,10 @@ class GymViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print("Received request data:", request.data)  # Log the incoming data
         return super().create(request, *args, **kwargs)
+    
+    def list(self, request, *args, **kwargs):
+        populate_gyms()
+        return super().list(request, *args, **kwargs)
     
 # class SessionListAPIView(generics.ListAPIView):
 #     queryset = Session.objects.all()
