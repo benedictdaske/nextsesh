@@ -24,12 +24,15 @@
 
 <div class="w-full">
     <div class="flex flex-col justify-center items-center gap-10">
-      
-        <div class="w-fit">
-            
-            <div class="container w-fit bg-gray-200 p-6 rounded-lg shadow-lg">
+
+        <div class="container w-fit bg-gray-200 mb-10 p-6 rounded-lg shadow-lg">
+            {#if $SessionStore.length === 0}
+                <div class="font-semibold text-md">
+                    No sessions scheduled.
+                </div>
+            {:else}
+
                 <div class="grid grid-cols-4 md:grid-cols-8 gap-4 justify-items-center">
-                    
                     {#each $SessionStore as session}
 
                         <div class="flex flex-col items-center gap-2">
@@ -48,10 +51,9 @@
                         </div>
 
                     {/each}
-                                        
                 </div>
-            </div>
-
+                
+            {/if}
         </div>
         
     </div>
