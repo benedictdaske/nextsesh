@@ -1,9 +1,16 @@
 <script lang="ts">
+	import { GymStore } from '$stores/gym-store';
     import { showGymSelectionDropdown } from '$stores/overlay-store';
     import { selected } from '$stores/selected-store';
 
     function onOutsideClick(event: MouseEvent) {
         event.stopPropagation()
+        $showGymSelectionDropdown = false
+    }
+
+    function onGymSelect(event: MouseEvent, gym: Gym) {
+        event.stopPropagation()
+        $selected.gym = gym
         $showGymSelectionDropdown = false
     }
 </script>
@@ -14,5 +21,11 @@
 <div onclick={onOutsideClick} class="fixed inset-0 bg-gray-400/30 z-40">
 </div>
 
-<div class="absolute flex bottom-full z-50 gap-x-2 p-1 mb-1 bg-white outline-1 outline-gray-400/90 rounded-full">
+<div class="absolute flex flex-col z-50 gap-x-2 p-1 mb-1 bg-white outline-1 outline-gray-400/90 rounded-lg shadow-lg">
+    {#each $GymStore as gym}
+        <button onclick={(e) => onGymSelect(e, gym)} type="button" class="bg-black">
+            {gym.name}
+        </button>
+    {/each}        
+
 </div>
