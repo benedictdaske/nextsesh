@@ -4,9 +4,9 @@
 	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
     import { showMinutePicker } from '$stores/overlay-store';
-	import DatePickerMobile from '$lib/schedule/DatePickerMobile.svelte';
-	import ScheduleButtonMobile from '$lib/schedule/ScheduleButtonMobile.svelte';
-	import MinutePickerMobile from '$lib/schedule/MinutePickerMobile.svelte';
+	import DatePickerMobile from '$lib/mobile/schedule/DatePickerMobile.svelte';
+	import ScheduleButtonMobile from '$lib/mobile/schedule/ScheduleButtonMobile.svelte';
+	import MinutePickerMobile from '$lib/mobile/schedule/MinutePickerMobile.svelte';
 
     let openingHour = $derived($selected.gym?.opening_time.getHours() || 0)
     let closingHour = $derived($selected.gym?.closing_time.getHours() || 0)

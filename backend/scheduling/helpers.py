@@ -18,9 +18,13 @@ def populate_gyms():
     try:
         with open(data_path, 'r') as file:
             gyms_data = json.load(file)
+            print(gyms_data)
     except Exception as e:
         print(f"Error decoding JSON from {data_path}: {e}")
         return
+    
+    for gym_data in gyms_data:
+        Gym.objects.create(**gym_data)
     
     
             

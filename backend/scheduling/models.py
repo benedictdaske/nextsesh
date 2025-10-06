@@ -34,7 +34,7 @@ class Gym(models.Model):
     website = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
     
-    icon = models.ImageField(upload_to='icons/', blank=True)
+    icon = models.CharField(max_length=64, blank=True)
     
     def __str__(self):
         return self.name

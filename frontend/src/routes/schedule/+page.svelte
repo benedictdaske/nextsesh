@@ -1,8 +1,8 @@
 <script lang="ts">
-    import SchedulingComponent from "$lib/schedule/SchedulingComponent.svelte"
-	import SessionCalendar from "$lib/schedule/SessionCalendar.svelte"
-    import SchedulingComponentMobile from "$lib/schedule/SchedulingComponentMobile.svelte"
-    import SessionCalendarMobile from "$lib/schedule/SessionCalendarMobile.svelte"
+    import SchedulingComponent from "$lib/desktop/schedule/SchedulingComponent.svelte"
+	import SessionCalendar from "$lib/desktop/schedule/SessionCalendar.svelte"
+    import SchedulingComponentMobile from "$lib/mobile/schedule/SchedulingComponentMobile.svelte"
+    import SessionCalendarMobile from "$lib/mobile/schedule/SessionCalendarMobile.svelte"
 	import { goto } from "$app/navigation";
 	import { isAuthenticated } from "$stores/auth-store";
 	import { selected } from "$stores/selected-store";
@@ -22,10 +22,12 @@
         </button>
 
         {#if $isAuthenticated }
+
             <SchedulingComponentMobile />
             <div class="pt-10">
                 <SessionCalendarMobile />
             </div>
+
         {:else}
             <div class="flex flex-1 h-1/3 pt-10 justify-center items-start">
                 <p class="text-l"> Please log in to view and schedule sessions. </p>
@@ -43,8 +45,10 @@
         </button>
 
         {#if $isAuthenticated }
+
             <SchedulingComponent />
             <SessionCalendar />
+            
         {:else}
             <div class="flex flex-1 h-1/3 mt-10 justify-center items-start">
                 <p class="text-l"> Please log in to view and schedule sessions. </p>

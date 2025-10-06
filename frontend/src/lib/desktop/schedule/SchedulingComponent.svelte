@@ -2,10 +2,13 @@
     import type { Gym, TimePoint } from '$lib/types'
     import { constructTimePoints } from '$lib/utils/datetime'
 
-    import ScheduleButton from '$lib/schedule/ScheduleButton.svelte'
-    import DatePicker from '$lib/schedule/DatePicker.svelte'
+    import ScheduleButton from '$lib/desktop/schedule/ScheduleButton.svelte'
+    import DatePicker from '$lib/desktop/schedule/DatePicker.svelte'
 	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
+	import { on } from 'svelte/events';
+	import { showGymSelectionDropdown } from '$stores/overlay-store';
+	import GymSelectionDropdown from './GymSelectionDropdown.svelte';
 
 
     let gymTimePoints: TimePoint[] = $derived(constructTimePoints($selected.gym))
@@ -54,6 +57,11 @@
         }   
         return false
     }
+
+    function onSelectGym() {
+        // open gym selection dropdown
+        $showGymSelectionDropdown = true
+    }
         
 </script>
 
@@ -82,6 +90,17 @@
                     {/each}
                     
                 </div>
+            </div>
+
+            <div class="relative flex flex-row my-10 justify-between">
+                <button onclick={onSelectGym} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                    Select Gym
+
+                    {#if $showGymSelectionDropdown }
+                        <GymSelectionDropdown />
+                    {/if}
+
+                </button>
             </div>
             
             <div class="relative flex flex-row my-10 justify-between">
