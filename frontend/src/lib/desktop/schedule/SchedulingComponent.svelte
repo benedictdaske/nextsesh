@@ -8,7 +8,7 @@
 	import { selected } from '$stores/selected-store';
 	import { on } from 'svelte/events';
 	import { showGymSelectionDropdown } from '$stores/overlay-store';
-	import GymSelectionDropdown from './GymSelectionDropdown.svelte';
+	import GymSelectionDropdown from '$lib/desktop/schedule/GymSelectionDropdown.svelte';
 
 
     let gymTimePoints: TimePoint[] = $derived(constructTimePoints($selected.gym))
@@ -92,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="relative flex flex-row my-10 justify-between">
+            <div class="relative flex flex-row my-10">
                 <button onclick={onSelectGym} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                     {$selected.gym ? 'Session at: ' + $selected.gym.name : 'Select Gym'}
 

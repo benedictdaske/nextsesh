@@ -3,10 +3,12 @@
 
 	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
-    import { showMinutePicker } from '$stores/overlay-store';
+    import { showGymSelectionDropdown, showMinutePicker } from '$stores/overlay-store';
 	import DatePickerMobile from '$lib/mobile/schedule/DatePickerMobile.svelte';
 	import ScheduleButtonMobile from '$lib/mobile/schedule/ScheduleButtonMobile.svelte';
 	import MinutePickerMobile from '$lib/mobile/schedule/MinutePickerMobile.svelte';
+    import GymSelectionDropdownMobile from '$lib/mobile/schedule/GymSelectionDropdownMobile.svelte';
+
 
     let openingHour = $derived($selected.gym?.opening_time.getHours() || 0)
     let closingHour = $derived($selected.gym?.closing_time.getHours() || 0)
@@ -46,11 +48,17 @@
         }   
         return false
     }
+
+    function onSelectGym() {
+        // open gym selection dropdown
+        $showGymSelectionDropdown = true
+    }
+
         
 </script>
 
 
-<div class="flex flex-col w-full justify-center items-center gap-y-8">
+<div class="flex flex-col w-full justify-center items-center gap-y-6">
         
     <DatePickerMobile />
 
@@ -83,6 +91,18 @@
             {/if}
 
         </div>
+    </div>
+
+    <div class="relative items-start">
+
+        <button onclick={onSelectGym} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+            {$selected.gym ? 'Session at: ' + $selected.gym.name : 'Select Gym'}
+            
+            {#if $showGymSelectionDropdown }
+            <GymSelectionDropdownMobile />
+            {/if}
+            
+        </button>
     </div>
     
     <div class="flex w-full justify-between">
