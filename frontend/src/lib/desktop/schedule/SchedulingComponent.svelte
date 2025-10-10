@@ -1,14 +1,13 @@
 <script lang="ts">
-    import type { Gym, TimePoint } from '$lib/types'
+    import type { TimePoint } from '$lib/types'
     import { constructTimePoints } from '$lib/utils/datetime'
 
     import ScheduleButton from '$lib/desktop/schedule/ScheduleButton.svelte'
     import DatePicker from '$lib/desktop/schedule/DatePicker.svelte'
-	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
-	import { on } from 'svelte/events';
-	import { showGymSelectionDropdown } from '$stores/overlay-store';
+	import { showGymSelectionDropdown, showSessionTypeSelectionDropdown } from '$stores/overlay-store';
 	import GymSelectionDropdown from '$lib/desktop/schedule/GymSelectionDropdown.svelte';
+	import SessionTypeSelectionDropdown from '$lib/desktop/schedule/SessionTypeSelectionDropdown.svelte';
 
 
     let gymTimePoints: TimePoint[] = $derived(constructTimePoints($selected.gym))
@@ -62,6 +61,11 @@
         // open gym selection dropdown
         $showGymSelectionDropdown = true
     }
+
+    function onSelectSessionType() {
+        // open session type selection dropdown
+        $showSessionTypeSelectionDropdown = true
+    }
         
 </script>
 
@@ -92,14 +96,23 @@
                 </div>
             </div>
 
-            <div class="relative flex flex-row my-10">
+            <div class="relative flex flex-row my-10 justify-between">
+                <!-- gym selection -->
                 <button onclick={onSelectGym} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                     {$selected.gym ? 'Session at: ' + $selected.gym.name : 'Select Gym'}
 
                     {#if $showGymSelectionDropdown }
                         <GymSelectionDropdown />
                     {/if}
-
+                </button>
+                    
+                <!-- session type selection -->
+                <button onclick={onSelectSessionType} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                    {$selected.sessionType?.set ? 'Session type: ' + 'blabla' : 'Select Type'}
+                    
+                    {#if $showSessionTypeSelectionDropdown }
+                        <SessionTypeSelectionDropdown />
+                    {/if}
                 </button>
             </div>
             

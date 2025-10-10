@@ -1,9 +1,10 @@
-import type { Gym } from '$lib/types'
+import type { Gym, SessionType } from '$lib/types'
 import { writable } from 'svelte/store'
 
 export const selected = writable({
     gym: null as Gym | null,
     date: null as Date | null,
+    sessionType: null as SessionType | null, 
     startButtonIndex: null as number | null,
     endButtonIndex: null as number | null,
     startIndex: null as number | null,

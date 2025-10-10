@@ -14,6 +14,11 @@ export type Gym = {
     website: string | null
 }
 
+export type SessionType = {
+    set: boolean
+    types: Record<string, boolean>
+}
+
 export type Session = {
     id: number
     user: {
@@ -21,6 +26,7 @@ export type Session = {
         username: string
     }
     gym: number | null
+    type: SessionType | null
     start: Date
     end: Date
     description: string | null

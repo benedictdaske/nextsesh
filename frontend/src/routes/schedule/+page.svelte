@@ -13,7 +13,7 @@
 
 </script>
 
-
+<!-- mobile -->
 <div class="flex lg:hidden flex-col justify-evenly items-center min-h-screen">
 
     <div class="flex flex-col justify-center items-center">
@@ -37,6 +37,7 @@
         
 </div>
 
+<!-- desktop -->
 <div class="hidden lg:flex flex-col justify-evenly items-center min-h-screen">
 
     <div class="flex flex-col justify-center items-center">
