@@ -1,13 +1,11 @@
 export const sessionTypeKeys = [
-    'board',
-    'chilling',
-    'fun',
-    'hangboard',
     'open_climbing',
-    'open_climbing_test',
-    'setting',
+    'board',
     'slab',
+    'weights',
+    'hangboard',
     'spontaneous',
+    'setting',
     'testing',
-    'weights'
+    'just_chilling',
 ]

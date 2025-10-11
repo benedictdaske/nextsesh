@@ -1,13 +1,11 @@
 <script lang="ts">
-    import type { Gym } from '$lib/types'
-
-	import { GymStore } from '$stores/gym-store'
 	import { selected } from '$stores/selected-store';
-    import { showGymSelectionDropdown, showMinutePicker } from '$stores/overlay-store';
+    import { showGymSelectionDropdown, showMinutePicker, showSessionTypeSelectionDropdown } from '$stores/overlay-store';
 	import DatePickerMobile from '$lib/mobile/schedule/DatePickerMobile.svelte';
 	import ScheduleButtonMobile from '$lib/mobile/schedule/ScheduleButtonMobile.svelte';
 	import MinutePickerMobile from '$lib/mobile/schedule/MinutePickerMobile.svelte';
     import GymSelectionDropdownMobile from '$lib/mobile/schedule/GymSelectionDropdownMobile.svelte';
+	import SessionTypeSelectionDropdownMobile from '$lib/mobile/schedule/SessionTypeSelectionDropdownMobile.svelte';
 
 
     let openingHour = $derived($selected.gym?.opening_time.getHours() || 0)
@@ -54,6 +52,10 @@
         $showGymSelectionDropdown = true
     }
 
+    function onSelectSessionType() {
+        // open session type selection dropdown
+        $showSessionTypeSelectionDropdown = true
+    }
         
 </script>
 
@@ -93,16 +95,27 @@
         </div>
     </div>
 
-    <div class="relative items-start">
+    <div class="relative w-full flex flex-row justify-between">
 
+        <!-- gym selection -->
         <button onclick={onSelectGym} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
             {$selected.gym ? 'Session at: ' + $selected.gym.name : 'Select Gym'}
             
             {#if $showGymSelectionDropdown }
-            <GymSelectionDropdownMobile />
+                <GymSelectionDropdownMobile />
             {/if}
-            
+
         </button>
+
+        <!-- session type selection -->
+        <button onclick={onSelectSessionType} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+            {$selected.sessionType.set > 0 ? $selected.sessionType.set + ($selected.sessionType.set > 1 ? ' Types' : ' Type') + ' Selected' : 'Select Type'}
+            
+            {#if $showSessionTypeSelectionDropdown }
+                <SessionTypeSelectionDropdownMobile />
+            {/if}
+        </button>
+
     </div>
     
     <div class="flex w-full justify-between">
