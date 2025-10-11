@@ -22,7 +22,7 @@ class SessionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Session
-        fields = ('id', 'user', 'gym', 'start', 'end', 'description', 'created_at')
+        fields = ('id', 'user', 'gym', 'start', 'end', 'type', 'description', 'created_at')
         read_only_fields = ('id', 'user', 'created_at')
 
     def get_user(self, obj):

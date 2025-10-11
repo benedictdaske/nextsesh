@@ -15,7 +15,7 @@ export type Gym = {
 }
 
 export type SessionType = {
-    set: boolean
+    set: number
     types: Record<string, boolean>
 }
 

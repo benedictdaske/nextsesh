@@ -45,5 +45,6 @@ class Session(models.Model):
     gym = models.ForeignKey(Gym, on_delete=models.SET_NULL, null=True, related_name="sessions")
     start = models.DateTimeField()
     end = models.DateTimeField()
+    type = models.JSONField(default=dict)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

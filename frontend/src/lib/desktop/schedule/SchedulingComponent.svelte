@@ -108,7 +108,7 @@
                     
                 <!-- session type selection -->
                 <button onclick={onSelectSessionType} type="button" class="py-2 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-400 text-white hover:bg-blue-500 focus:outline-hidden focus:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    {$selected.sessionType?.set ? 'Session type: ' + 'blabla' : 'Select Type'}
+                    {$selected.sessionType.set > 0 ? $selected.sessionType.set + ($selected.sessionType.set > 1 ? ' Types' : ' Type') + ' Selected' : 'Select Type'}
                     
                     {#if $showSessionTypeSelectionDropdown }
                         <SessionTypeSelectionDropdown />

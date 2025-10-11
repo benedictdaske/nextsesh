@@ -19,7 +19,8 @@
 			let newFormattedSession = {
 				gym: $selected.gym?.id,
 				start: dateTimeToISOString($selected.date ?? null, startHour, startMinute),
-				end: dateTimeToISOString($selected.date ?? null, endHour, endMinute)
+				end: dateTimeToISOString($selected.date ?? null, endHour, endMinute),
+				type: $selected.sessionType.types
 			}
 
 			// reset selection

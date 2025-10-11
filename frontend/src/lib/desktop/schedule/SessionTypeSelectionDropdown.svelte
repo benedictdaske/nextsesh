@@ -1,14 +1,8 @@
 <script lang="ts">
 	import { sessionTypeKeys } from '$lib/sessionTypes';
-	import type { SessionType } from '$lib/types';
+	import { humanize } from '$lib/utils/strings';
     import { showSessionTypeSelectionDropdown } from '$stores/overlay-store';
     import { selected } from '$stores/selected-store';
-
-    let sessionType: SessionType = $state({
-        set: false,
-        types: Object.fromEntries(sessionTypeKeys.map(t => [t, false]))
-    })
-    $inspect(sessionType)
 
     function onOutsideClick(event: MouseEvent) {
         event.stopPropagation()
@@ -17,8 +11,8 @@
 
     function onTypeSelect(event: MouseEvent, type: string) {
         event.stopPropagation()
-        sessionType.types[type] = !sessionType.types[type]
-        $showSessionTypeSelectionDropdown = false
+        $selected.sessionType.types[type] = !$selected.sessionType.types[type]
+        $selected.sessionType.set += $selected.sessionType.types[type] ? 1 : -1
     }
 </script>
 
@@ -31,9 +25,9 @@
 <div class="absolute flex flex-col top-0 right-0 w-fit max-h-50 overflow-y-auto z-50 gap-x-2 p-2 bg-white outline-1 gap-y-1 outline-gray-400/90 rounded-lg shadow-lg">
     {#each sessionTypeKeys as type}
 
-        <button onclick={(e) => onTypeSelect(e, type)} type="button" class="w-full whitespace-nowrap text-sm text-black px-2 py-1 rounded-lg border border-gray-400/90 hover:bg-gray-200 focus:outline-none"
-            class:bg-gray-300={sessionType.types[type]}>
-            {type}
+        <button onclick={(e) => onTypeSelect(e, type)} type="button" class="{$selected.sessionType.types[type] ? 'bg-gray-300 hover:bg-gray-300' : 'hover:bg-gray-200'} w-full whitespace-nowrap text-sm text-black px-2 py-1 rounded-lg border border-gray-400/90 focus:outline-none">
+            <!-- class:bg-gray-300={$selected.sessionType.types[type]}> -->
+            {humanize(type)}
         </button>
 
     {/each}        
