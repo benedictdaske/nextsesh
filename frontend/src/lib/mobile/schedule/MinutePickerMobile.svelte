@@ -14,6 +14,7 @@
                 $selected.endIndex = index
             } else { // button before start -> move start to end, set button as start
                 $selected.endHour = $selected.startHour
+                $selected.endMinute = $selected.startMinute
                 $selected.endIndex = $selected.startIndex
                 $selected.startHour = hour
                 $selected.startIndex = index
